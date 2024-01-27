@@ -1,17 +1,49 @@
 import mongoose from 'mongoose'
+const Schema = mongoose.Schema
 
-const movieSchema = mongoose.Schema({
+const movieSchema = Schema({
+    user: {
+        type: String,
+        
+    },
+    likes: [
+        {
+            user: {
+              type: String,
+            }
+        }
+    ],
+    
+    dislikes: [
+        {
+            user: {
+              type: String,
+            }
+        }
+    ],
+
+    player: [
+        {
+            name: {
+                type: String,
+            },
+            image: {
+                type: String,
+            },
+            actorsid:{
+                type: String,
+            }
+        }
+    ],
     name: {
         type: String,
         required: true
     },
     time: {
         type: String,
-        required: true
     },
     link: {
         type: String,
-        required: true
     },
     country: {
         type: String,
@@ -19,7 +51,6 @@ const movieSchema = mongoose.Schema({
     },
     year: {
         type: String,
-        required: true
     },
     score: {
         type: String,
@@ -27,7 +58,6 @@ const movieSchema = mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
     },
     director: {
         type: String,
@@ -39,7 +69,18 @@ const movieSchema = mongoose.Schema({
     },
     actors: {
         type: String,
-        required: true
+    },
+    season: {
+        type: String,
+    },
+    type: {
+        type: String,
+        enum: ['Film', 'Dizi'],
+    },
+    
+    views: {
+       type: Number,
+       default: 0,
     },
     catagory: {
         type: String,

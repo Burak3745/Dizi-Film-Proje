@@ -1,17 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Navbar, Nav, Container, NavDropdown, Form } from "react-bootstrap";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Logo from "../image/King.png";
 import SmileFace from "../image/smiley-face.png"
-
+import { useDispatch, useSelector } from "react-redux";
+import { getMovieAction } from "../action/movieAction";
+import { useHistory } from 'react-router-dom';
+import '../css/Header.css'
 const Header = ({ user, setUser }) => {
   const navigate = useNavigate();
+  const[search1, setSearch1] = useState('')
+  
   useEffect(() => {
     if (localStorage.getItem("user") && !user) {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
   }, [user, setUser]);
+
+  const handleChangeName = (e) => {
+    const { value } = e.target;
+    
+    const params2 = new URLSearchParams(window.location.search);
+    params2.set("name", value);
+    e.preventDefault()
+    navigate(`/search?${params2.toString()}`);
+  };
+
   const AdminControl = user && user.userType
   return (
     <Navbar
@@ -27,19 +42,31 @@ const Header = ({ user, setUser }) => {
             alt="Logo"
             src={Logo}
             style={{height: "90px", width: "auto"}}
-            className="d-inline-block align-top"
+            className="mx-4 d-inline-block align-top"
           />
         </Nav.Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto my-2 my-lg-0" hidden={!user}>
-            <Nav.Link href="/diziler" className="text-light">
-              Diziler
+            <Nav.Link href="/diziler" className="dizifilm-text" style={{}}>
+            <button class="draw">Diziler</button>
+              
             </Nav.Link>
-            <Nav.Link href="/filmler" className="text-light">
-              Filmler
+            <Nav.Link href="/filmler" className="dizifilm-text" style={{}}>
+            <button class="draw">Filmler</button>
             </Nav.Link>
           </Nav>
+          
+          <div id="wrap" >
+            <Form hidden={!user}>
+              <input type="text" id="input2" className="input2" onChange={(e) => setSearch1(e.target.value)} onKeyPress={event => {
+                if (event.key === "Enter") {
+                  handleChangeName(event)
+                }
+              }} placeholder="Film-Dizi Arayın"/><input id="search_submit" className="search_submit" type="submit" />
+              </Form>
+            
+            </div>
 
           <Nav>
             <img
@@ -57,7 +84,7 @@ const Header = ({ user, setUser }) => {
               title={user && user.email}
               id="dropdownMenu"
             >
-              <NavDropdown.Item className="dropdownItem" onClick={() => navigate("/message")}>
+              <NavDropdown.Item className="dropdownItem" onClick={() => navigate("/posts")}>
                 Bildirimler
               </NavDropdown.Item>
               <NavDropdown.Item className="dropdownItem" onClick={() => navigate("/profile")}>
@@ -79,7 +106,7 @@ const Header = ({ user, setUser }) => {
                   borderRadius: "6px",
                   backgroundColor: "transparent",
                   border: "none",
-                  color: "#e95420",
+                  color: "#2dffb9",
                 }}
                 onClick={(e) => {
                   localStorage.removeItem("user");

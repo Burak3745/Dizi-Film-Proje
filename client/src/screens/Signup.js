@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Signup as mySignup} from "../axios/index.js";
+import { Navigate, useNavigate } from "react-router-dom";
+import { Signup as mySignup } from "../axios/index.js";
 import "react-phone-number-input/style.css";
 import toast from "react-hot-toast";
 import "../css/Signup.css";
@@ -30,9 +30,13 @@ const Signup = () => {
       setDisabled(true);
     }
   }, [formData]);
-  return (
-    <div className="signup-body">
-    <Container className="signUp">
+  if (localStorage.getItem("user")) {
+    return <Navigate to="/browse" />
+  }
+  else {
+    return (
+      <div className="signup-body">
+        <Container className="signUp">
           <form className="signUp-form"
             onSubmit={(e) => {
               e.preventDefault();
@@ -46,57 +50,57 @@ const Signup = () => {
             }}
           >
             <h2 className="signIn-header">Sign Up</h2>
-               <input
-                onChange={(e) =>
-                  setFormData({ ...formData, fullname: e.target.value })
-                }
-                type="text"
-                name="fullname"
-                placeholder="İsim soyisim girin"
-              />
+            <input
+              onChange={(e) =>
+                setFormData({ ...formData, fullname: e.target.value })
+              }
+              type="username"
+              name="fullname"
+              placeholder="İsim soyisim girin"
+            />
 
-              <input
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                type="text"
-                name="email"
-                placeholder="E-mail adresinizi girin"
-              />
-              
-              <input
-                onChange={(e) =>
-                  setFormData({ ...formData, phoneNumber: e.target.value })
-                }
-                type="number"
-                name="phoneNumber"
-                placeholder="Telefon numaranızı giriniz"
-              />
-              <input
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-                type="password"
-                name="password"
-                placeholder="Şifrenizi girin"
-              />
-              <input
-                onChange={(e) =>
-                  setFormData({ ...formData, passwordAgain: e.target.value })
-                }
-                type="password"
-                name="passwordAgain"
-                placeholder="Şifrenizi tekrar girin"
-              />
+            <input
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              type="email"
+              name="email"
+              placeholder="E-mail adresinizi girin"
+            />
 
-              <button
-                disabled={disabled}
-                type="submit"
-              >
-                Kaydol
-              </button>
-              <h4>
-                <a href="#2" onClick={() => navigate("/login")}>Back to login</a>
+            <input
+              onChange={(e) =>
+                setFormData({ ...formData, phoneNumber: e.target.value })
+              }
+              type="number"
+              name="phoneNumber"
+              placeholder="Telefon numaranızı giriniz"
+            />
+            <input
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              type="password"
+              name="password"
+              placeholder="Şifrenizi girin"
+            />
+            <input
+              onChange={(e) =>
+                setFormData({ ...formData, passwordAgain: e.target.value })
+              }
+              type="password"
+              name="passwordAgain"
+              placeholder="Şifrenizi tekrar girin"
+            />
+
+            <button
+              disabled={disabled}
+              type="submit"
+            >
+              Kaydol
+            </button>
+            <h4>
+              <a href="" onClick={() => navigate("/login")}>Back to login</a>
             </h4>
           </form>
           <div
@@ -132,9 +136,10 @@ const Signup = () => {
               * E-mail adresi en az 3 karakter olmalı.
             </p>
           </div>
-    </Container>
-    </div>
-  );
-};
+        </Container>
+      </div>
+    );
+  };
+}
 
 export default Signup;

@@ -6,7 +6,6 @@ export default function Rating({ score, style }) {
         {Array.from(Array(Math.floor(Number(score/2)))).map((_, i) => (
         <BsStarFill className="rating-stars" key={i} />
         ))}
-        <h4>{score / 2}</h4>
     </div>
     )
   );

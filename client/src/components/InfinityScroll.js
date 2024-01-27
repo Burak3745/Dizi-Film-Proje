@@ -32,11 +32,12 @@ export default function InfinityScroll({ children }) {
     return (
         <div className="row">
             <ScrollButton direction="left" onClick={scrollHandler.bind(null, true)} />
-            <ScrollButton onClick={scrollHandler.bind(null, false)} />
+            <ScrollButton direction="right" onClick={scrollHandler.bind(null, false)} />
             <animated.div className="translate-row" ref={scrollRef} scrollLeft={scrollVal}>
-                <div>{children}</div>
+                <div >{children}</div>
                 <div ref={contentRef}>{children}</div>
-                <div>{children}</div>
+                <div >{children}</div>
+                
             </animated.div>
         </div>
     );

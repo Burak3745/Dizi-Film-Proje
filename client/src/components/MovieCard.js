@@ -18,9 +18,8 @@ backdrop_path, poster_path }) {
         <Link to={`/play/${id}`}>
             <BsPlayFill className="play-btn" />
         </Link>
-        <Link to={`/details/${id}`}>
+        <Link to={`/details/${id}`}></Link>
           <BsChevronUp className="details-btn" />
-          </Link>
       </div>
     </div>
     );
